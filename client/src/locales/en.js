@@ -6,6 +6,7 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -112,6 +113,20 @@ export default {
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
     quantity: 'Qty',
+    submittedOrders: 'Submitted Orders',
+    noSubmittedOrders: 'No restocking orders have been submitted yet.',
+    submitted: {
+      orderNumber: 'Order Number',
+      items: 'Items',
+      submittedDate: 'Submitted',
+      leadTime: 'Lead Time',
+      expectedDelivery: 'Expected Delivery',
+      totalCost: 'Total Cost',
+      status: 'Status',
+      unitCost: 'Unit cost',
+      leadTimeShort: 'Lead time'
+    },
+    days: '{count} days',
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -127,6 +142,42 @@ export default {
       expectedDelivery: 'Expected Delivery',
       actualDelivery: 'Actual Delivery'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Build a restocking order from forecasted demand growth within a budget',
+    budgetLabel: 'Budget',
+    budgetHint: 'Items are added in priority order while they fit the remaining budget',
+    summary: {
+      totalCost: 'Total Cost',
+      remainingBudget: 'Remaining Budget',
+      itemCount: 'Items to Order',
+      longestLeadTime: 'Longest Lead Time'
+    },
+    daysValue: '{count} days',
+    recommendedHeading: 'Recommended Order',
+    table: {
+      sku: 'SKU',
+      name: 'Item Name',
+      trend: 'Trend',
+      quantity: 'Quantity',
+      unitCost: 'Unit Cost',
+      lineTotal: 'Line Total',
+      leadTime: 'Lead Time (days)'
+    },
+    notIncludedHeading: 'Not included (exceeds remaining budget)',
+    notIncludedReason: 'Exceeds remaining budget',
+    placeOrder: 'Place Order',
+    placing: 'Placing order...',
+    successTitle: 'Order placed',
+    successMessage: 'Order {orderNumber} submitted. Lead time: {days} days. Expected delivery: {date}.',
+    viewOrders: 'View in Orders',
+    errorGeneric: 'Failed to place the restocking order. Please try again.',
+    loadError: 'Failed to load restocking data',
+    empty: 'No items need restocking based on the current demand forecast.',
+    nothingFits: 'No items fit within the selected budget.'
   },
 
   // Finance/Spending
@@ -204,6 +255,7 @@ export default {
     shipped: 'Shipped',
     processing: 'Processing',
     backordered: 'Backordered',
+    submitted: 'Submitted',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
     adequate: 'Adequate'
