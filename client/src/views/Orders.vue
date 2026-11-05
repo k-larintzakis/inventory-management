@@ -27,6 +27,58 @@
         </div>
       </div>
 
+      <!-- Restocking orders have no warehouse/category, so they are not affected by the
+           global filters and are excluded from the status count cards above. -->
+      <div class="card submitted-card">
+        <div class="card-header">
+          <h3 class="card-title">{{ t('orders.submittedOrders') }} ({{ restockingOrders.length }})</h3>
+        </div>
+        <div v-if="restockingOrders.length === 0" class="empty-line">{{ t('orders.noSubmittedOrders') }}</div>
+        <div v-else class="table-container">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th class="col-order-number">{{ t('orders.submitted.orderNumber') }}</th>
+                <th class="col-items">{{ t('orders.submitted.items') }}</th>
+                <th class="col-date">{{ t('orders.submitted.submittedDate') }}</th>
+                <th class="col-date">{{ t('orders.submitted.leadTime') }}</th>
+                <th class="col-date">{{ t('orders.submitted.expectedDelivery') }}</th>
+                <th class="col-value">{{ t('orders.submitted.totalCost') }}</th>
+                <th class="col-status">{{ t('orders.submitted.status') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in restockingOrders" :key="order.order_number">
+                <td class="col-order-number"><strong>{{ order.order_number }}</strong></td>
+                <td class="col-items">
+                  <details class="items-details">
+                    <summary class="items-summary">
+                      {{ t('orders.itemsCount', { count: order.items.length }) }}
+                    </summary>
+                    <div class="items-dropdown">
+                      <div v-for="item in order.items" :key="item.sku" class="item-entry">
+                        <span class="item-name">{{ item.name }}</span>
+                        <span class="item-meta">
+                          {{ t('orders.quantity') }}: {{ item.quantity }} @ {{ formatCurrency(item.unit_cost, currentCurrency) }}
+                          / {{ t('orders.submitted.leadTimeShort') }}: {{ t('orders.days', { count: item.lead_time_days }) }}
+                        </span>
+                      </div>
+                    </div>
+                  </details>
+                </td>
+                <td class="col-date">{{ formatDate(order.submitted_date) }}</td>
+                <td class="col-date">{{ t('orders.days', { count: order.lead_time_days }) }}</td>
+                <td class="col-date">{{ formatDate(order.expected_delivery) }}</td>
+                <td class="col-value"><strong>{{ formatCurrency(order.total_cost, currentCurrency) }}</strong></td>
+                <td class="col-status">
+                  <span class="badge info">{{ t(`status.${order.status.toLowerCase()}`) }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">{{ t('orders.allOrders') }} ({{ orders.length }})</h3>
@@ -83,6 +135,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { api } from '../api'
 import { useFilters } from '../composables/useFilters'
 import { useI18n } from '../composables/useI18n'
+import { formatCurrency } from '../utils/currency'
 
 export default {
   name: 'Orders',
@@ -95,6 +148,7 @@ export default {
     const loading = ref(true)
     const error = ref(null)
     const orders = ref([])
+    const restockingOrders = ref([])
 
     // Use shared filters
     const {
@@ -109,7 +163,15 @@ export default {
       try {
         loading.value = true
         const filters = getCurrentFilters()
-        const fetchedOrders = await api.getOrders(filters)
+        // A restocking fetch failure must not break the main orders table
+        const [fetchedOrders, fetchedRestocking] = await Promise.all([
+          api.getOrders(filters),
+          api.getRestockingOrders().catch(err => {
+            console.error('Failed to load restocking orders:', err)
+            return []
+          })
+        ])
+        restockingOrders.value = fetchedRestocking
 
         // Sort orders by order_date (earliest first)
         orders.value = fetchedOrders.sort((a, b) => {
@@ -146,7 +208,9 @@ export default {
     const formatDate = (dateString) => {
       const { currentLocale } = useI18n()
       const locale = currentLocale.value === 'ja' ? 'ja-JP' : 'en-US'
-      return new Date(dateString).toLocaleDateString(locale, {
+      const date = new Date(dateString)
+      if (!dateString || isNaN(date.getTime())) return '-'
+      return date.toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
@@ -164,6 +228,9 @@ export default {
       getOrderStatusClass,
       formatDate,
       currencySymbol,
+      currentCurrency,
+      formatCurrency,
+      restockingOrders,
       translateProductName,
       translateCustomerName
     }
@@ -201,6 +268,16 @@ export default {
 
 .col-value {
   width: 120px;
+}
+
+.submitted-card {
+  margin-bottom: 1.5rem;
+}
+
+.empty-line {
+  padding: 1.5rem;
+  color: #64748b;
+  font-size: 0.875rem;
 }
 
 /* Items details styling */

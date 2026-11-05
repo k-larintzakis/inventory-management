@@ -6,6 +6,7 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -112,6 +113,20 @@ export default {
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
     quantity: 'Qty',
+    submittedOrders: 'Submitted Orders',
+    noSubmittedOrders: 'No restocking orders have been submitted yet.',
+    submitted: {
+      orderNumber: 'Order Number',
+      items: 'Items',
+      submittedDate: 'Submitted',
+      leadTime: 'Lead Time',
+      expectedDelivery: 'Expected Delivery',
+      totalCost: 'Total Cost',
+      status: 'Status',
+      unitCost: 'Unit cost',
+      leadTimeShort: 'Lead time'
+    },
+    days: '{count} days',
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -127,6 +142,42 @@ export default {
       expectedDelivery: 'Expected Delivery',
       actualDelivery: 'Actual Delivery'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Build a restocking order from forecasted demand growth within a budget',
+    budgetLabel: 'Budget',
+    budgetHint: 'Items are added in priority order while they fit the remaining budget',
+    summary: {
+      totalCost: 'Total Cost',
+      remainingBudget: 'Remaining Budget',
+      itemCount: 'Items to Order',
+      longestLeadTime: 'Longest Lead Time'
+    },
+    daysValue: '{count} days',
+    recommendedHeading: 'Recommended Order',
+    table: {
+      sku: 'SKU',
+      name: 'Item Name',
+      trend: 'Trend',
+      quantity: 'Quantity',
+      unitCost: 'Unit Cost',
+      lineTotal: 'Line Total',
+      leadTime: 'Lead Time (days)'
+    },
+    notIncludedHeading: 'Not included (exceeds remaining budget)',
+    notIncludedReason: 'Exceeds remaining budget',
+    placeOrder: 'Place Order',
+    placing: 'Placing order...',
+    successTitle: 'Order placed',
+    successMessage: 'Order {orderNumber} submitted. Lead time: {days} days. Expected delivery: {date}.',
+    viewOrders: 'View in Orders',
+    errorGeneric: 'Failed to place the restocking order. Please try again.',
+    loadError: 'Failed to load restocking data',
+    empty: 'No items need restocking based on the current demand forecast.',
+    nothingFits: 'No items fit within the selected budget.'
   },
 
   // Finance/Spending
@@ -204,6 +255,7 @@ export default {
     shipped: 'Shipped',
     processing: 'Processing',
     backordered: 'Backordered',
+    submitted: 'Submitted',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
     adequate: 'Adequate'
@@ -309,6 +361,46 @@ export default {
     english: 'English',
     japanese: 'Japanese',
     selectLanguage: 'Select Language'
+  },
+
+  // Purchase orders
+  purchaseOrder: {
+    createTitle: 'Create Purchase Order',
+    viewTitle: 'Purchase Order Details',
+    shortageSummary: 'Shortage Summary',
+    item: 'Item',
+    sku: 'SKU',
+    orderId: 'Order ID',
+    quantityNeeded: 'Quantity Needed',
+    quantityAvailable: 'Quantity Available',
+    shortage: 'Shortage',
+    daysDelayed: 'Days Delayed',
+    units: 'units',
+    days: 'days',
+    supplierName: 'Supplier Name',
+    quantity: 'Quantity',
+    unitCost: 'Unit Cost (USD)',
+    expectedDelivery: 'Expected Delivery Date',
+    notes: 'Notes (optional)',
+    notesPlaceholder: 'Add any notes for this purchase order',
+    total: 'Total',
+    submit: 'Create Purchase Order',
+    submitting: 'Creating...',
+    poId: 'PO Number',
+    supplier: 'Supplier',
+    totalCost: 'Total Cost',
+    status: 'Status',
+    createdDate: 'Created Date',
+    noNotes: 'None',
+    loading: 'Loading purchase order...',
+    errors: {
+      supplierRequired: 'Supplier name is required.',
+      quantityInvalid: 'Quantity must be greater than 0.',
+      unitCostInvalid: 'Unit cost must be greater than 0.',
+      dateRequired: 'Expected delivery date is required.',
+      createFailed: 'Failed to create purchase order.',
+      loadFailed: 'Failed to load purchase order.'
+    }
   },
 
   // Common
