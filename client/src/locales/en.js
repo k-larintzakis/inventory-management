@@ -363,6 +363,46 @@ export default {
     selectLanguage: 'Select Language'
   },
 
+  // Purchase orders
+  purchaseOrder: {
+    createTitle: 'Create Purchase Order',
+    viewTitle: 'Purchase Order Details',
+    shortageSummary: 'Shortage Summary',
+    item: 'Item',
+    sku: 'SKU',
+    orderId: 'Order ID',
+    quantityNeeded: 'Quantity Needed',
+    quantityAvailable: 'Quantity Available',
+    shortage: 'Shortage',
+    daysDelayed: 'Days Delayed',
+    units: 'units',
+    days: 'days',
+    supplierName: 'Supplier Name',
+    quantity: 'Quantity',
+    unitCost: 'Unit Cost (USD)',
+    expectedDelivery: 'Expected Delivery Date',
+    notes: 'Notes (optional)',
+    notesPlaceholder: 'Add any notes for this purchase order',
+    total: 'Total',
+    submit: 'Create Purchase Order',
+    submitting: 'Creating...',
+    poId: 'PO Number',
+    supplier: 'Supplier',
+    totalCost: 'Total Cost',
+    status: 'Status',
+    createdDate: 'Created Date',
+    noNotes: 'None',
+    loading: 'Loading purchase order...',
+    errors: {
+      supplierRequired: 'Supplier name is required.',
+      quantityInvalid: 'Quantity must be greater than 0.',
+      unitCostInvalid: 'Unit cost must be greater than 0.',
+      dateRequired: 'Expected delivery date is required.',
+      createFailed: 'Failed to create purchase order.',
+      loadFailed: 'Failed to load purchase order.'
+    }
+  },
+
   // Common
   common: {
     loading: 'Loading...',
